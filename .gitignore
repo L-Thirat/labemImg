@@ -1,5 +1,6 @@
 resources/icons/.DS_Store
-
+dataset/
+result/
 resources.py
 
 .idea*

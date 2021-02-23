@@ -17,6 +17,7 @@ try:
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 except ImportError:
+    print("ERROR: Lib not found")
     # needed for py3+qt4
     # Ref:
     # http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html
