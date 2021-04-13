@@ -1,5 +1,10 @@
 import cv2
 import numpy as np
+import os
+
+def is_image_file(filename):
+    suffix_img_names = {"bmp", "jpg", "jpeg", "png"}
+    return str.lower(filename.split(".")[-1]) in suffix_img_names
 
 
 def empty(area):
@@ -12,8 +17,8 @@ cv2.resizeWindow("Parameters", 640, 240)
 cv2.createTrackbar("threshold_red", "Parameters", 248, 255, empty)
 cv2.createTrackbar("threshold_green", "Parameters", 255, 255, empty)
 cv2.createTrackbar("threshold_blue", "Parameters", 255, 255, empty)
-cv2.createTrackbar("t_light", "Parameters", 80, 255, empty)
-cv2.createTrackbar("t_contrast", "Parameters", 90, 255, empty)
+cv2.createTrackbar("t_light", "Parameters", 20, 255, empty)
+cv2.createTrackbar("t_contrast", "Parameters", -10, 255, empty)
 
 
 def apply_brightness_contrast(input_img, brightness=0, contrast=0):
@@ -41,14 +46,12 @@ def apply_brightness_contrast(input_img, brightness=0, contrast=0):
     return buf
 
 
-from os import walk
-
-mypath = "C:/Users/thirat/Documents/git/labelImg/dataset/HR/"
+input_dir = "dataset/RESIZE/"
 lst_filenames = []
-for (_, _, filenames) in walk(mypath):
-    for file in filenames:
-        if ".jpg" in file:
-            lst_filenames.append(file)
+for filenames in os.listdir(input_dir):
+    for filename in filenames:
+        if is_image_file(filename):
+            lst_filenames.append(filename)
 
 i = 0
 while True:
@@ -58,7 +61,7 @@ while True:
     t_contrast = cv2.getTrackbarPos("t_contrast", "Parameters")
     t_light = cv2.getTrackbarPos("t_light", "Parameters")
 
-    frame = cv2.imread(mypath + lst_filenames[i])
+    frame = cv2.imread(input_dir + lst_filenames[i])
     # Convert BGR to HSV
     hsv = apply_brightness_contrast(frame, t_light, t_contrast)
     hsv = cv2.cvtColor(hsv, cv2.COLOR_RGB2GRAY)
@@ -77,7 +80,7 @@ while True:
     k = cv2.waitKey(100) & 0xff
     if k == 27:
         break
-    cv2.imwrite(mypath + "/bw/80c90_" + lst_filenames[i], hsv)
+    cv2.imwrite(input_dir + "bw/m20cm10_" + lst_filenames[i], hsv)
 
     # elif k == ord('a'):
     #     # cv2.imwrite(mypath + "/mask/" + lst_filenames[i], mask)

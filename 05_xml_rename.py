@@ -3,11 +3,10 @@ import xml.etree.ElementTree as ET
 
 mypath = "C:/Users/thirat/Documents/git/labelImg/dataset/HR/"
 # checked = ["IMG_20201208_113851.xml", "IMG_20201208_113858.xml","IMG_20201208_113904.xml"]
-checked = []
 
 for (_, _, filenames) in walk(mypath):
     for file in filenames:
-        if (".xml" in file) and (file not in checked):
+        if ".xml" in file:
             key = "80c90_"
             rename_xml = key+file
 

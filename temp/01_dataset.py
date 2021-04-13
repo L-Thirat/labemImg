@@ -1,7 +1,4 @@
 import cv2
-import os
-import numpy as np
-import time
 
 cam = cv2.VideoCapture(0)
 cam.set(3, 640)  # set video width
@@ -85,7 +82,6 @@ while (True):
     elif count >= 150:  # Take 30 face sample and stop video
         break
 
-#      break
 # Do a bit of cleanup
 print("\n [INFO] Exiting Program and cleanup stuff")
 cam.release()
